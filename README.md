@@ -46,8 +46,7 @@ Output: scaled DataFrame
 **2. Preprocessing Function**
 run_preprocessing(file_path: str, drop_outliers=False, log_large=False, scale_entropy=False, all_scale=False, entropy_top_n=5, rng_thr=100) -> (pd.DataFrame, pd.Series, list)
 Reads a CSV file and processes data based on various preprocessing options, returning the feature matrix X, target vector y, and list of scaled columns.
-Parameters:
-file_path: path to the CSV data file
+Parameters: file_path: path to the CSV data file
 drop_outliers: whether to remove outliers per class (default False)
 log_large: whether to apply log transformation on features with large ranges (default False)
 scale_entropy: whether to scale top N entropy features (default False)
@@ -58,8 +57,7 @@ Returns:
 X: preprocessed feature DataFrame
 y: target Series
 scaled_cols: list of scaled feature names
-Processing steps:
-Load data and drop missing values
+Processing steps:Load data and drop missing values
 Convert string columns (excluding target) to categorical type
 Extract numerical features
 Apply outlier removal, log transformation, and scaling options
@@ -79,10 +77,10 @@ Returns: dictionary mapping scenario names to (X, y) tuples
 evaluate_all_models(X: pd.DataFrame, y: pd.Series, random_state=42) -> dict
 Trains and evaluates four classification models on the input data, returning cross-validation scores, test accuracy, macro F1 score, recall for class 1, and feature importances (if available).
 Models:
-Logistic Regression (with balanced class weights)
-Random Forest (with hyperparameter tuning)
-XGBoost (with tuning)
-LightGBM (with tuning)
+**Logistic Regression** (with balanced class weights)
+**Random Forest** (with hyperparameter tuning)
+**XGBoost** (with tuning)
+**LightGBM** (with tuning)
 
 Process:
 Convert categorical features to numeric codes
