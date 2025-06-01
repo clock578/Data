@@ -1,13 +1,32 @@
-Key Features
-Processes data under different preprocessing scenarios.
+# Import libraries
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+from scipy.stats import entropy
+import warnings
+warnings.filterwarnings("ignore")
 
-Addresses class imbalance using SMOTE (Synthetic Minority Over-sampling Technique).
+# --Util functions--
 
-Performs hyperparameter tuning and cross-validation for each model.
+# compute by entropy
+def compute_entropy(series, bins=30):
+    hist, _ = np.histogram(series.astype(float), bins=bins, density=True)
+    return entropy(hist + 1e-9)
 
-Summarizes experimental results (F1-score, accuracy, recall) in tabular format.
+# remove the outliers
+def remove_outliers_per_class(df, feats, target='class', k=1.5):
+    keep_parts = []
+    for label in df[target].unique():
+        sub = df[df[target] == label].copy()
+        mask = np.ones(len(sub), dtype=bool)
+        for col in feats:
+            q1, q3 = sub[col].quantile([0.25, 0.75])
+            iqr = q3 - q1
+            lower, upper = q1 - k * iqr, q3 + k * iqr
+            mask &= sub[col].between(lower, upper)
+        keep_parts.append(sub[mask])
+    return pd.concat(keep_parts, ignore_index=True)
 
-=======
 # transform large distributed features to log
 def log_transform_large_range(df, feats, thr=100):
     df_out = df.copy()
@@ -204,6 +223,7 @@ def evaluate_all_models(X, y, random_state=42):
 
 # Cross-validation
         cv_scores = cross_val_score(model, X_train_resampled, y_train_resampled, cv=3, scoring='f1')
+
 # Testset evaluation
         y_pred = model.predict(X_test)
         report = classification_report(y_test, y_pred, output_dict=True)
@@ -219,7 +239,6 @@ def evaluate_all_models(X, y, random_state=42):
         }
 
     return results
-
 # Perform evaluation by no-Nan dataset
 print("\nEvaluating models for noNull dataset")
 noNull_eval_results = {}
@@ -233,16 +252,13 @@ processed_eval_results = {}
 for strategy, (X, y) in processed_results.items():
     print(f"\nStrategy: {strategy}")
     processed_eval_results[strategy] = evaluate_all_models(X, y)
-
 # Merge and sort results
 df_combined = pd.concat([df_noNull, df_processed], ignore_index=True)
 df_combined = df_combined.sort_values(by=['F1_macro', 'Recall_1', 'Accuracy'], ascending=[False, False, False])
-
 # Print
 pd.set_option('display.max_rows', None)
 print("\nOverall Results Summary:")
 display(df_combined)
-
 # Select the best combination
 best_strategy = 'outlier_removed'
 best_dataset = noNull_results[best_strategy]
