@@ -64,12 +64,12 @@ def run_preprocessing(file_path,
                       rng_thr=100):
     df = pd.read_csv(file_path).dropna().reset_index(drop=True)
 
-    # Change the obejective features to categorical features for meachine learning
+# Change the obejective features to categorical features for meachine learning
     for col in df.select_dtypes(include=['object']).columns:
         if col != 'class':
             df[col] = df[col].astype('category')
 
-    # Remove the target feature
+# Remove the target feature
     num_cols = df.select_dtypes(include=[np.number]).columns.tolist()
     if 'class' in num_cols:
         num_cols.remove('class')
@@ -101,7 +101,7 @@ def run_all_scenarios(file_path):
         'entropy_scaled_top5': dict(drop_outliers=False, log_large=False, scale_entropy=True, all_scale=False, entropy_top_n=5),
         'all_scaled': dict(drop_outliers=False, log_large=False, scale_entropy=False, all_scale=True)
     }
-    # Save in dictionary form
+# Save in dictionary form
     print(f"\nFile: {file_path}")
     results = {}
     for name, params in scenarios.items():
@@ -127,20 +127,20 @@ from imblearn.over_sampling import SMOTE
 def evaluate_all_models(X, y, random_state=42):
     results = {}
 
-    # Handling categorical variables
+# Handling categorical variables
     for col in X.select_dtypes(include='category').columns:
         X[col] = X[col].astype('category').cat.codes
 
-    # train/test split
+# train/test split
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=random_state, stratify=y
     )
 
-    # Apply SMOTE
+# Apply SMOTE
     smote = SMOTE(random_state=random_state)
     X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)
 
-    # Define hyperparameter space
+# Define hyperparameter space
     xgb_params = {
         'n_estimators': [100],
         'max_depth': [3, 4],
@@ -221,9 +221,9 @@ def evaluate_all_models(X, y, random_state=42):
             else:
                 importance = None
 
-        # Cross-validation
+# Cross-validation
         cv_scores = cross_val_score(model, X_train_resampled, y_train_resampled, cv=3, scoring='f1')
-        # Testset evaluation
+# Testset evaluation
         y_pred = model.predict(X_test)
         report = classification_report(y_test, y_pred, output_dict=True)
 
