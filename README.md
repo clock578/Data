@@ -16,7 +16,7 @@ This project provides a fully automated, configurable machine learning pipeline 
 -  Evaluate performance using:
   - Accuracy, Precision, Recall, F1 Score, AUC, Cross-validation
 -  Return top 5 best-performing model + preprocessing combinations
-- 🧩 Designed in Scikit-learn style with clear modular structure
+- Designed in Scikit-learn style with clear modular structure
 
 ---
 
