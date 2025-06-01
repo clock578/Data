@@ -1,3 +1,4 @@
+```python
 # ==============================
 # Machine Learning Pipeline (Pandas / Scikit-learn Style)
 # ==============================
@@ -204,3 +205,4 @@ def evaluate_all_models(X: pd.DataFrame, y: pd.Series, random_state: int = 42) -
         }
 
     return results
+```
