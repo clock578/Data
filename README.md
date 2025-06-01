@@ -114,7 +114,9 @@ def run_all_scenarios(file_path):
     return results
 
 noNull_results = run_all_scenarios("noNull_data.csv")
-processed_results = run_all_scenarios("processed_data.csv") from sklearn.model_selection import train_test_split, RandomizedSearchCV, cross_val_score
+processed_results = run_all_scenarios("processed_data.csv")
+
+from sklearn.model_selection import train_test_split, RandomizedSearchCV, cross_val_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 import xgboost as xgb
@@ -221,7 +223,6 @@ def evaluate_all_models(X, y, random_state=42):
 
         # Cross-validation
         cv_scores = cross_val_score(model, X_train_resampled, y_train_resampled, cv=3, scoring='f1')
-
         # Testset evaluation
         y_pred = model.predict(X_test)
         report = classification_report(y_test, y_pred, output_dict=True)
@@ -237,7 +238,8 @@ def evaluate_all_models(X, y, random_state=42):
         }
 
     return results
- # Perform evaluation by no-Nan dataset
+
+# Perform evaluation by no-Nan dataset
 print("\nEvaluating models for noNull dataset")
 noNull_eval_results = {}
 for strategy, (X, y) in noNull_results.items():
@@ -249,14 +251,18 @@ print("\nEvaluating models for processed dataset")
 processed_eval_results = {}
 for strategy, (X, y) in processed_results.items():
     print(f"\nStrategy: {strategy}")
-    processed_eval_results[strategy] = evaluate_all_models(X, y) # Merge and sort results
+    processed_eval_results[strategy] = evaluate_all_models(X, y)
+
+# Merge and sort results
 df_combined = pd.concat([df_noNull, df_processed], ignore_index=True)
 df_combined = df_combined.sort_values(by=['F1_macro', 'Recall_1', 'Accuracy'], ascending=[False, False, False])
 
 # Print
 pd.set_option('display.max_rows', None)
 print("\nOverall Results Summary:")
-display(df_combined) # Select the best combination
+display(df_combined)
+
+# Select the best combination
 best_strategy = 'outlier_removed'
 best_dataset = noNull_results[best_strategy]
 X_full, y_full = best_dataset 
@@ -288,7 +294,9 @@ model = xgb.XGBClassifier(
 
 model.fit(X_train_final_resampled, y_train_final_resampled)
 
-y_pred = model.predict(X_test_final) from sklearn.metrics import confusion_matrix
+y_pred = model.predict(X_test_final)
+
+from sklearn.metrics import confusion_matrix
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -301,7 +309,9 @@ plt.title("Confusion Matrix - Final XGBoost")
 plt.xlabel("Predicted")
 plt.ylabel("True")
 plt.tight_layout()
-plt.show() from sklearn.metrics import classification_report, accuracy_score
+plt.show()
+
+from sklearn.metrics import classification_report, accuracy_score
 import pandas as pd
 
 report = classification_report(y_test_final, y_pred, output_dict=True) 
