@@ -1,22 +1,36 @@
 # Comprehensive Machine Learning Pipeline
 
-This project provides a fully automated, configurable machine learning pipeline that applies various combinations of data preprocessing techniques and classification models to find the best-performing setup.
+This project provides a fully automated, configurable machine learning pipeline that applies various combinations of preprocessing techniques and classification models to find the best-performing setup.
 
-# Features
+---
 
-- Load data from CSV
-- Apply multiple scalers and encoders:
+## Features
+
+-  Load data from CSV
+-  Automatically apply preprocessing combinations:
   - **Scalers**: MinMax, Standard, Robust
   - **Encoders**: OneHot, Ordinal
-- Train multiple models with hyperparameter tuning:
+-  Evaluate multiple models:
   - Logistic Regression
   - Random Forest
   - XGBoost
-- Evaluate using accuracy, precision, recall, F1, AUC, and cross-validation
-- Return top 5 best-performing combinations
-- Scikit-learn compatible design with clear docstrings
+-  Perform hyperparameter tuning using RandomizedSearchCV
+-  Evaluate performance using:
+  - Accuracy, Precision, Recall, F1 Score, AUC, Cross-validation
+-  Return top 5 best-performing model + preprocessing combinations
+- 🧩 Designed in Scikit-learn style with clear modular structure
 
-# Function: `comprehensive_ml_pipeline`
+---
+
+## Usage
 
 ```python
-comprehensive_ml_pipeline(file_path, target_column, test_size=0.2, random_state=42, n_iter=5)
+from pipeline import comprehensive_ml_pipeline
+
+result = comprehensive_ml_pipeline(
+    file_path='processed_data',
+    target_column='class',
+    test_size=0.2,
+    random_state=42,
+    n_iter=5
+)
