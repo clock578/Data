@@ -2,15 +2,13 @@
 
 This project provides a fully automated, configurable machine learning pipeline that applies various combinations of preprocessing techniques and classification models to find the best-performing setup.
 
----
-
 ## Features
 
 -  Load data from CSV
 -  Automatically apply preprocessing combinations:
   - **Scalers**: MinMax, Standard, Robust
   - **Encoders**: OneHot, Ordinal
--  Evaluate multiple models:
+-  **Evaluate multiple models**:
   - Logistic Regression
   - Random Forest
   - XGBoost
