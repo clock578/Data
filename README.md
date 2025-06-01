@@ -1,4 +1,4 @@
-Machine Learning Pipeline (Pandas / Scikit-learn Style)
+#Machine Learning Pipeline (Pandas / Scikit-learn Style)
 Overview
 This pipeline reads a CSV dataset, automatically applies multiple preprocessing scenarios, and performs training and evaluation on major machine learning models.
 It includes handling imbalanced data with SMOTE, hyperparameter tuning, and cross-validation evaluation.
