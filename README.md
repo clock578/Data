@@ -7,7 +7,6 @@ Performs hyperparameter tuning and cross-validation for each model.
 
 Summarizes experimental results (F1-score, accuracy, recall) in tabular format.
 
-<<<<<<< HEAD
 =======
 # transform large distributed features to log
 def log_transform_large_range(df, feats, thr=100):
