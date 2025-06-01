@@ -315,4 +315,3 @@ summary = {
 df_metrics = pd.DataFrame.from_dict(summary, orient='index', columns=['Score'])
 print("\nFinal Model Performance Summary:")
 display(df_metrics)
->>>>>>> e7156cae014b9a291721a0531817038c0555fe33
